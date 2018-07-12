@@ -1,3 +1,4 @@
+#!/usr/bin/python
 #analyzes amazon reviews using a recurrent neural network
 #we'll represent words using their pretrained GloVe embeddings
 
