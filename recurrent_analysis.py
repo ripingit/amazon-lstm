@@ -3,7 +3,7 @@
 #we'll represent words using their pretrained GloVe embeddings
 
 import pickle
-import IPython
+#import IPython
 import numpy as np
 from nltk.tokenize.casual import TweetTokenizer as TT
 import tensorflow as tf
@@ -11,6 +11,7 @@ from keras.models import Sequential
 from keras.layers import Dropout, Dense, Activation, LSTM, Flatten, Masking
 from sklearn.model_selection import train_test_split
 import gc
+
 '''
 #load the word vectors from GloVe 
 def loadGloveModel(gloveFile):
@@ -127,4 +128,4 @@ model.fit(all_train, y_train, epochs = 20, validation_split = 0.5, batch_size = 
 score = model.evaluate(all_test, y_test, batch_size = 64)
 print(score)
 '''
-IPython.embed()
+#IPython.embed()
