@@ -114,7 +114,7 @@ model.add(Dropout(0.5))
 model.add(Dense(1, activation = "sigmoid"))
 model.compile(optimizer = "adam", loss = "binary_crossentropy", metrics = ["accuracy"])
 model.fit(all_train, y_train, epochs = 20, validation_split = 0.5, batch_size = 64)
-score = model.evaluate(all_test, y_test, batch_size = 64)
+score = model.evaluate(all_test, y_test, batch_size = 128)
 print(score)
 '''
 model = Sequential()
