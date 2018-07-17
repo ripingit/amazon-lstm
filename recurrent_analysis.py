@@ -28,7 +28,7 @@ def loadGloveModel(gloveFile):
 
 glove_model = loadGloveModel("../glove.42B.300d.txt")
 '''
-with open("review_vocab_2.pickle", 'rb') as handle:
+with open("200d_review_vocab_4.pickle", 'rb') as handle:
     glove_model = pickle.load(handle)
 
 vector_dimensionality = 300
