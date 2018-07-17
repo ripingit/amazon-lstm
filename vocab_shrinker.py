@@ -32,7 +32,7 @@ def loadGloveModel(gloveFile):
     f.close()
     return model
 
-glove_model = loadGloveModel("../glove.42B.300d.txt")
+glove_model = loadGloveModel("../glove.6B/glove.6B.200d.txt")
 
 counter = collections.Counter()
 review_vocab = {}
@@ -41,15 +41,15 @@ for review in x_unsplit_tokenized:
     for token in review:
         counter[token] += 1
             
-vocab_size = 17000
+vocab_size = 12000
 
-for word in counter.most_common(vocab_size):
+for word, index in counter.most_common(vocab_size):
     if word in glove_model:
         review_vocab[word] = glove_model[word]
         
 print("The size of the review vocabulary is: %s" % len(review_vocab))
             
-with open('review_vocab_2.pickle', 'wb') as handle:
-    pickle.dump(review_vocab, handle, protocol=2)
+with open('200d_review_vocab_4.pickle', 'wb') as handle:
+    pickle.dump(review_vocab, handle, protocol=4)
     
 IPython.embed()
