@@ -47,7 +47,7 @@ train_len = len(x_train)
 test_len =  len(x_test)
 
 #convert reviews into arrays of word vectors
-max_review_length = 370
+max_review_length = 320
 tokenizer = TT(preserve_case = False)
 
 #returns a 3D matrix representing the (sample, timestep, feature) of a GloVe-translated review 
