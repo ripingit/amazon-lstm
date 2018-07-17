@@ -47,7 +47,7 @@ train_len = len(x_train)
 test_len =  len(x_test)
 
 #convert reviews into arrays of word vectors
-max_review_length = 340
+max_review_length = 360
 tokenizer = TT(preserve_case = False)
 
 #returns a 3D matrix representing the (sample, timestep, feature) of a GloVe-translated review 
@@ -117,7 +117,7 @@ model.add(Dropout(0.5))
 model.add(Dense(1, activation = "sigmoid"))
 model.compile(optimizer = "adam", loss = "binary_crossentropy", metrics = ["accuracy"])
 model.fit(all_train, y_train, epochs = 18, validation_split = 0.5, batch_size = 256)
-score = model.evaluate(all_test, y_test, batch_size = 256)
+score = model.evaluate(all_test, y_test, batch_size = 320)
 print(score)
 '''
 model = Sequential()
