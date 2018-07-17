@@ -31,7 +31,7 @@ glove_model = loadGloveModel("../glove.42B.300d.txt")
 with open("200d_review_vocab_4.pickle", 'rb') as handle:
     glove_model = pickle.load(handle)
 
-vector_dimensionality = 300
+vector_dimensionality = 200
 
 #load the reviews    
 x_file = open("x_unsplit_balanced.txt", "r", encoding = "utf-8")
