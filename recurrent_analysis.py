@@ -12,22 +12,6 @@ from keras.layers import Dropout, Dense, Activation, LSTM, Bidirectional, Maskin
 from sklearn.model_selection import train_test_split
 import gc
 
-'''
-#load the word vectors from GloVe 
-def loadGloveModel(gloveFile):
-    print ("Loading GloVe Model")
-    f = open(gloveFile,'r', encoding = "utf-8")
-    model = {}
-    for line in f:
-        splitLine = line.split()
-        word = splitLine[0]
-        embedding = np.array([float(val) for val in splitLine[1:]])
-        model[word] = embedding
-    print ("Done.",len(model),"words loaded!")
-    return model
-
-glove_model = loadGloveModel("../glove.42B.300d.txt")
-'''
 with open("200d_review_vocab_4.pickle", 'rb') as handle:
     glove_model = pickle.load(handle)
 
@@ -87,6 +71,21 @@ del x_test
 del x_unsplit
 gc.collect()
 
+
+####do the same for a few more models
+#the input dimensionality is any number of samples, each containing a sequence of max_review_length 300-d vectors
+
+model = Sequential()
+model.add(Masking(mask_value = 0.0, input_shape = (max_review_length, vector_dimensionality)))
+model.add(Bidirectional(LSTM(64, activation = "tanh", dropout = 0.2, recurrent_dropout = 0.2)))
+model.add(Dense(32, activation = "relu"))
+model.add(Dropout(0.3))
+model.add(Dense(1, activation = "sigmoid"))
+model.compile(optimizer = "adam", loss = "binary_crossentropy", metrics = ["accuracy"])
+model.fit(all_train, y_train, epochs = 18, validation_split = 0.5, batch_size = 320)
+score = model.evaluate(all_test, y_test, batch_size = 320)
+print(score)
+
 '''
 #creates the model
 model = Sequential()
@@ -106,19 +105,7 @@ model.fit(all_train, y_train, epochs = 20, validation_split = 0.5, batch_size = 
 score = model.evaluate(all_test, y_test, batch_size = 128)
 print(score)
 '''
-####do the same for a few more models
-#the input dimensionality is any number of samples, each containing a sequence of max_review_length 300-d vectors
 
-model = Sequential()
-model.add(Masking(mask_value = 0.0, input_shape = (max_review_length, vector_dimensionality)))
-model.add(Bidirectional(LSTM(64, activation = "tanh", dropout = 0.2, recurrent_dropout = 0.2)))
-model.add(Dense(32, activation = "relu"))
-model.add(Dropout(0.3))
-model.add(Dense(1, activation = "sigmoid"))
-model.compile(optimizer = "adam", loss = "binary_crossentropy", metrics = ["accuracy"])
-model.fit(all_train, y_train, epochs = 18, validation_split = 0.5, batch_size = 320)
-score = model.evaluate(all_test, y_test, batch_size = 320)
-print(score)
 '''
 model = Sequential()
 model.add(Masking(mask_value = 0, input_shape = (max_review_length, 300)))
