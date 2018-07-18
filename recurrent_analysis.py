@@ -8,7 +8,7 @@ import numpy as np
 from nltk.tokenize.casual import TweetTokenizer as TT
 import tensorflow as tf
 from keras.models import Sequential
-from keras.layers import Dropout, Dense, Activation, LSTM, Flatten, Masking
+from keras.layers import Dropout, Dense, Activation, LSTM, Bidirectional, Masking
 from sklearn.model_selection import train_test_split
 import gc
 
@@ -111,13 +111,13 @@ print(score)
 
 model = Sequential()
 model.add(Masking(mask_value = 0.0, input_shape = (max_review_length, vector_dimensionality)))
-model.add(LSTM(64, activation = "tanh", dropout = 0.2, recurrent_dropout = 0.2))
+model.add(Bidirectional(LSTM(64, activation = "tanh", dropout = 0.2, recurrent_dropout = 0.2)))
 model.add(Dense(32, activation = "relu"))
-model.add(Dropout(0.5))
+model.add(Dropout(0.3))
 model.add(Dense(1, activation = "sigmoid"))
 model.compile(optimizer = "adam", loss = "binary_crossentropy", metrics = ["accuracy"])
-model.fit(all_train, y_train, epochs = 18, validation_split = 0.5, batch_size = 256)
-score = model.evaluate(all_test, y_test, batch_size = 256)
+model.fit(all_train, y_train, epochs = 30, validation_split = 0.2, batch_size = 300)
+score = model.evaluate(all_test, y_test, batch_size = 300)
 print(score)
 '''
 model = Sequential()
