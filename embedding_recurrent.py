@@ -36,13 +36,13 @@ del x_unsplit
 model = Sequential()
 model.add(Embedding(len(embedding_matrix), vector_dimensionality, weights=[embedding_matrix], input_length= max_review_length, trainable=False))
 model.add(Masking(mask_value = 0.0, input_shape = (max_review_length, vector_dimensionality)))
-model.add(Bidirectional(LSTM(64, activation = "tanh", dropout = 0.2, recurrent_dropout = 0.2)))
+model.add(Bidirectional(LSTM(64, activation = "tanh", dropout = 0.4, recurrent_dropout = 0.4)))
 model.add(Dense(32, activation = "relu"))
-model.add(Dropout(0.3))
+#model.add(Dropout(0.1))
 model.add(Dense(1, activation = "sigmoid"))
 model.compile(optimizer = "adam", loss = "binary_crossentropy", metrics = ["accuracy"])
-model.fit(x_train, y_train, epochs = 20, validation_split = 0.5, batch_size = 340)
-score = model.evaluate(x_test, y_test, batch_size = 340)
+model.fit(x_train, y_train, epochs = 23, validation_split = 0.5, batch_size = 320)
+score = model.evaluate(x_test, y_test, batch_size = 320)
 print(score)
 
 '''
