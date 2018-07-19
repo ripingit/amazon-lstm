@@ -6,18 +6,26 @@ import pickle
 import IPython
 import numpy as np
 import tensorflow as tf
-from nltk.tokenize.casual import TweetTokenizer as TT
+#from nltk.tokenize.casual import TweetTokenizer as TT
+from keras.preprocessing.text import text_to_word_sequence
 from keras.preprocessing.text import Tokenizer
 from sklearn.model_selection import train_test_split
 import gc
+import argparse 
 
-vector_dimensionality = 300
-review_length = 450
+parser = argparse.ArgumentParser(description='Specify the dimensionality of the vectors and length of reviews')
+parser.add_argument("-d", action = "store", nargs = 1, default = 300, type = int, dest = "vector_dimensionality", help = "the dimensionality of the GloVe vectors used")
+parser.add_argument("-r", action = "store", nargs = 1, default = 370, type = int, dest = "review_length", help = "the review length")
+args = parser.parse_args()
+
+
+vector_dimensionality = args.vector_dimensionality
+review_length = args.review_length
 
 with open(str(vector_dimensionality) + "d_review_vocab_4.pickle", 'rb') as handle:
     glove_model = pickle.load(handle)
-    
-tt = TT(preserve_case = False)
+
+#tt = TT(preserve_case = False)
 
 #load the reviews    
 x_file = open("x_unsplit_balanced.txt", "r", encoding = "utf-8")
@@ -27,7 +35,7 @@ y_file = open("y_unsplit_balanced.txt", "r", encoding = "utf-8")
 #split the data into train and test
 x_unsplit = x_file.readlines()
 y_unsplit = np.array([int(line.strip()) for line in y_file])
-x_unsplit_tokenized = [tt.tokenize(review) for review in x_unsplit]
+x_unsplit_tokenized = [text_to_word_sequence(review) for review in x_unsplit]
 
 
 x_train, x_test, y_train, y_test = train_test_split(x_unsplit_tokenized, y_unsplit, test_size=0.2)

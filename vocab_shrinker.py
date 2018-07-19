@@ -2,18 +2,26 @@
 
 import IPython
 import numpy as np
-from nltk.tokenize.casual import TweetTokenizer as TT
+#from nltk.tokenize.casual import TweetTokenizer as TT
+from keras.preprocessing.text import text_to_word_sequence
 import gc
 from sklearn.feature_extraction.text import CountVectorizer
 import collections
 import pickle
+import argparse
 
-tokenizer = TT(preserve_case = False)
+parser = argparse.ArgumentParser(description='Specify the dimensionality of the vectors')
+parser.add_argument("-d", action = "store", nargs = 1, default = 300, type = int, dest = "vector_dimensionality", help = "the dimensionality of the GloVe vectors used")
+args = parser.parse_args()
+
+vector_dimensionality = args.vector_dimensionality
+#tokenizer = TT(preserve_case = False)
 
 #load the reviews    
 x_file = open("x_unsplit_balanced.txt", "r", encoding = "utf-8")
 x_unsplit = x_file.readlines()
-x_unsplit_tokenized = [tokenizer.tokenize(review) for review in x_unsplit]
+x_unsplit_tokenized = [text_to_word_sequence(review) for review in x_unsplit]
+#x_unsplit_tokenized = [tokenizer.tokenize(review) for review in x_unsplit]
 
 del x_unsplit
 gc.collect()
@@ -32,7 +40,7 @@ def loadGloveModel(gloveFile):
     f.close()
     return model
 
-glove_model = loadGloveModel("../glove.6B/glove.6B.200d.txt")
+glove_model = loadGloveModel("../glove.6B/glove.6B." + str(vector_dimensionality) + "d.txt")
 
 counter = collections.Counter()
 review_vocab = {}
@@ -49,7 +57,7 @@ for word, index in counter.most_common(vocab_size):
         
 print("The size of the review vocabulary is: %s" % len(review_vocab))
             
-with open('200d_review_vocab_4.pickle', 'wb') as handle:
+with open(str(vector_dimensionality) + 'd_review_vocab_4.pickle', 'wb') as handle:
     pickle.dump(review_vocab, handle, protocol=4)
     
 IPython.embed()

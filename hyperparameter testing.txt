@@ -1,0 +1,43 @@
+7/18
+
+Bidirectional, 64 units, dropout 0.2, recurrent dropout 0.2
+32 units, dropout 0.3
+18 epochs
+Review length 340
+200d vectors
+batch size 320
+E10: VL: 0.3415 VA: 0.8516
+E15: VL: 0.2991 VA: 0.8685
+
+
+
+7/19
+Bidirectional, 64 units, dropout 0.2, recurrent dropout 0.2
+32 units, dropout 0.3
+18 epochs
+Review length 370
+300d vectors
+batch size 320
+E10: VL: 0.3033 VA: 0.8752
+E15: VL: 0.2869 VA: 0.8860
+E20: VL: 0.2894 VA: 0.8882
+
+Bidirectional, 64 units, dropout 0.2, recurrent dropout 0.2
+32 units, dropout 0.3
+18 epochs
+Review length 450
+batch size 340
+E10: VL: 0.3190 VA: 0.8627
+E15: VL: 0.2980 VA: 0.8764
+E20: VL: 0.3010 VA: 0.8850
+Test: 0.8971
+
+Bidirectional, 64 units, dropout 0.2, recurrent dropout 0.2
+32 units, dropout 0.1
+18 epochs
+Review length 450
+300d vectors
+batch size 320
+E10: VL: 0.3044 VA: 0.8717
+E15: VL: 0.2798 VA: 0.8875
+E20: VL: 0.2894 VA: 0.8882
