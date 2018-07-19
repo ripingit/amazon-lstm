@@ -12,12 +12,14 @@ from keras.layers import Dropout, Dense, Activation, LSTM, Bidirectional, Maskin
 from sklearn.model_selection import train_test_split
 import gc
 
-embedding_matrix = np.load("vocab_vector_matrix.npz")
+max_review_length = 370
+vector_dimensionality = 300
+
+embedding_matrix = np.load(str(vector_dimensionality) + "d_vocab_vector_matrix.npz")
 embedding_matrix = embedding_matrix[embedding_matrix.keys()[0]]
 
-vector_dimensionality = 200
 
-x_unsplit = np.load("indexed_unsplit.npz") 
+x_unsplit = np.load(str(vector_dimensionality)+ "d_" + str(max_review_length) + "l_indexed_unsplit.npz") 
 x_unsplit = x_unsplit[x_unsplit.keys()[0]]
 
 y_file = open("y_unsplit_balanced.txt", "r", encoding = "utf-8")
@@ -25,9 +27,6 @@ y_unsplit = np.array([int(line.strip()) for line in y_file])
 
 x_train, x_test, y_train, y_test = train_test_split(x_unsplit, y_unsplit, test_size=0.2)
 del x_unsplit
-
-#convert reviews into arrays of word vectors
-max_review_length = 340
 
 
 
