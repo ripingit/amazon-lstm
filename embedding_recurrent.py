@@ -42,7 +42,7 @@ model.add(Dense(32, activation = "relu"))
 model.add(Dropout(0.3))
 model.add(Dense(1, activation = "sigmoid"))
 model.compile(optimizer = "adam", loss = "binary_crossentropy", metrics = ["accuracy"])
-model.fit(x_train, y_train, epochs = 18, validation_split = 0.5, batch_size = 320)
+model.fit(x_train, y_train, epochs = 25, validation_split = 0.5, batch_size = 320)
 score = model.evaluate(x_test, y_test, batch_size = 320)
 print(score)
 
