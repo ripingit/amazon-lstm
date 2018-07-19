@@ -12,11 +12,11 @@ from sklearn.model_selection import train_test_split
 import gc
 
 vector_dimensionality = 300
-review_length = 370
+review_length = 450
 
 with open(str(vector_dimensionality) + "d_review_vocab_4.pickle", 'rb') as handle:
     glove_model = pickle.load(handle)
-
+    
 tt = TT(preserve_case = False)
 
 #load the reviews    
@@ -48,7 +48,6 @@ for word, index in tokenizer.word_index.items():
         vocab_array[index] = glove_model[word]
 
 np.savez_compressed(str(vector_dimensionality) + "d_vocab_vector_matrix.npz", vocab_array)
-#IPython.embed()
 del vocab_array
 
 #returns a 3D matrix representing the (sample, timestep, feature) of a GloVe-translated review 
@@ -82,7 +81,6 @@ def get_reviews(data):
 all_unsplit = tokenizer.texts_to_sequences(x_unsplit_tokenized)
 np_unsplit = get_reviews(all_unsplit)
 np.savez_compressed(str(vector_dimensionality) + "d_" + str(review_length) + "l_indexed_unsplit.npz", np_unsplit)
-IPython.embed()
 '''
 
 #get the training and testing datasets

@@ -12,7 +12,7 @@ from keras.layers import Dropout, Dense, Activation, LSTM, Bidirectional, Maskin
 from sklearn.model_selection import train_test_split
 import gc
 
-max_review_length = 370
+max_review_length = 450
 vector_dimensionality = 300
 
 embedding_matrix = np.load(str(vector_dimensionality) + "d_vocab_vector_matrix.npz")
