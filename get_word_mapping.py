@@ -14,8 +14,8 @@ import gc
 import argparse 
 
 parser = argparse.ArgumentParser(description='Specify the dimensionality of the vectors and length of reviews')
-parser.add_argument("-d", action = "store", nargs = 1, default = 300, type = int, dest = "vector_dimensionality", help = "the dimensionality of the GloVe vectors used")
-parser.add_argument("-r", action = "store", nargs = 1, default = 370, type = int, dest = "review_length", help = "the review length")
+parser.add_argument("-d", action = "store", nargs = '?', default = 300, type = int, dest = "vector_dimensionality", help = "the dimensionality of the GloVe vectors used")
+parser.add_argument("-r", action = "store", nargs = '?', default = 370, type = int, dest = "review_length", help = "the review length")
 args = parser.parse_args()
 
 

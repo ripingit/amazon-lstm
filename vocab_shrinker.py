@@ -11,7 +11,7 @@ import pickle
 import argparse
 
 parser = argparse.ArgumentParser(description='Specify the dimensionality of the vectors')
-parser.add_argument("-d", action = "store", nargs = 1, default = 300, type = int, dest = "vector_dimensionality", help = "the dimensionality of the GloVe vectors used")
+parser.add_argument("-d", action = "store", nargs = '?', default = 300, type = int, dest = "vector_dimensionality", help = "the dimensionality of the GloVe vectors used")
 args = parser.parse_args()
 
 vector_dimensionality = args.vector_dimensionality
