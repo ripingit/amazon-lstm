@@ -12,7 +12,7 @@ from keras.layers import Dropout, Dense, Activation, LSTM, Bidirectional, Maskin
 from sklearn.model_selection import train_test_split
 import gc
 
-max_review_length = 450
+max_review_length = 370
 vector_dimensionality = 300
 
 embedding_matrix = np.load(str(vector_dimensionality) + "d_vocab_vector_matrix.npz")
@@ -36,13 +36,13 @@ del x_unsplit
 model = Sequential()
 model.add(Embedding(len(embedding_matrix), vector_dimensionality, weights=[embedding_matrix], input_length= max_review_length, trainable=False))
 model.add(Masking(mask_value = 0.0, input_shape = (max_review_length, vector_dimensionality)))
-model.add(Bidirectional(LSTM(64, activation = "tanh", dropout = 0.4, recurrent_dropout = 0.4)))
+model.add(Bidirectional(LSTM(64, activation = "tanh", dropout = 0.5, recurrent_dropout = 0.5)))
 model.add(Dense(32, activation = "relu"))
-#model.add(Dropout(0.1))
+model.add(Dropout(0.3))
 model.add(Dense(1, activation = "sigmoid"))
 model.compile(optimizer = "adam", loss = "binary_crossentropy", metrics = ["accuracy"])
-model.fit(x_train, y_train, epochs = 23, validation_split = 0.5, batch_size = 320)
-score = model.evaluate(x_test, y_test, batch_size = 320)
+model.fit(x_train, y_train, epochs = 30, validation_split = 0.5, batch_size = 200)
+score = model.evaluate(x_test, y_test, batch_size = 200)
 print(score)
 
 '''
