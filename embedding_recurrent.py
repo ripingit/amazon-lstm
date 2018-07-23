@@ -45,36 +45,4 @@ model.fit(x_train, y_train, epochs = 30, validation_split = 0.5, batch_size = 20
 score = model.evaluate(x_test, y_test, batch_size = 200)
 print(score)
 
-'''
-#creates the model
-model = Sequential()
-
-#the input dimensionality is any number of samples, each containing a sequence of max_review_length 300-d vectors
-model.add(Masking(mask_value = 0, input_shape = (max_review_length, 300)))
-model.add(LSTM(64, activation = "tanh", dropout = 0.4, recurrent_dropout = 0.4))
-model.add(Dense(32, activation = "relu"))
-model.add(Dropout(0.5))
-model.add(Dense(1, activation = "sigmoid"))
-
-model.compile(optimizer = "adam", loss = "binary_crossentropy", metrics = ["accuracy"])
-model.fit(all_train, y_train, epochs = 20, validation_split = 0.5, batch_size = 64)
-
-
-#test the model
-score = model.evaluate(all_test, y_test, batch_size = 128)
-print(score)
-'''
-
-'''
-model = Sequential()
-model.add(Masking(mask_value = 0, input_shape = (max_review_length, 300)))
-model.add(LSTM(64, activation = "tanh", dropout = 0.2, recurrent_dropout = 0.2))
-model.add(Dense(32, activation = "relu"))
-model.add(Dropout(0.5))
-model.add(Dense(1, activation = "sigmoid"))
-model.compile(optimizer = "adam", loss = "binary_crossentropy", metrics = ["accuracy"])
-model.fit(all_train, y_train, epochs = 20, validation_split = 0.5, batch_size = 64)
-score = model.evaluate(all_test, y_test, batch_size = 64)
-print(score)
-'''
 #IPython.embed()
