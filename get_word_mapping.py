@@ -31,7 +31,7 @@ with open(simp_string + "_way_" + str(vector_dimensionality) + "d_review_vocab_4
 #tt = TT(preserve_case = False)
 
 #load the reviews    
-x_file = open("x_" +simp_string + "_way_unsplit_balanced.txt", "r", encoding = "utf-8")
+x_file = open("x_" +simp_string + "_way_balanced.txt", "r", encoding = "utf-8")
 
 
 #split the data into train and test
