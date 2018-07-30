@@ -58,7 +58,7 @@ model.add(Bidirectional(LSTM(64, activation = "tanh", dropout = 0.5, recurrent_d
 model.add(Dense(32, activation = "relu"))
 model.add(Dropout(0.3))
 model.add(Dense(number_of_units, activation = "sigmoid"))
-model.compile(optimizer = "adam", loss = "binary_crossentropy", metrics = ["accuracy"])
+model.compile(optimizer = "adam", loss = loss_type, metrics = ["accuracy"])
 model.fit(x_train, y_train, epochs = num_epochs, validation_split = 0.5, batch_size = 200)
 score = model.evaluate(x_test, y_test, batch_size = 200)
 print(score)
