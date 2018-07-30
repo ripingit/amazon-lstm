@@ -18,6 +18,7 @@ parser = argparse.ArgumentParser(description='Specify the review length, vector 
 parser.add_argument("-s", action = "store", nargs = '?', default = 2, type = int, dest = "simplification", help = "2: binary (default); 3: negative, neutral, positive; 5: 1-5 stars")
 parser.add_argument("-d", action = "store", nargs = '?', default = 300, type = int, dest = "dimensionality", help = "specify vector dimensionality ")
 parser.add_argument("-r", action = "store", nargs = '?', default = 370, type = int, dest = "review_length", help = "max_review_length (generate reviews of this length using get_word_mapping)")
+parser.add_argument("-e", action = "store", nargs = '?', default = 30, type = int, dest = "epochs", help = "number of epochs")
 args = parser.parse_args()
 
 
@@ -25,6 +26,7 @@ max_review_length = args.review_length
 vector_dimensionality = args.dimensionality
 simplification_level = args.simplification
 simp_string = "2" if simplification_level == 2 else "multi"
+num_epochs = args.epochs
 
 embedding_matrix = np.load(simp_string + "_way_" +str(vector_dimensionality) + "d_vocab_vector_matrix.npz")
 embedding_matrix = embedding_matrix[embedding_matrix.keys()[0]]
@@ -55,7 +57,7 @@ model.add(Dense(32, activation = "relu"))
 model.add(Dropout(0.3))
 model.add(Dense(number_of_units, activation = "sigmoid"))
 model.compile(optimizer = "adam", loss = "binary_crossentropy", metrics = ["accuracy"])
-model.fit(x_train, y_train, epochs = 30, validation_split = 0.5, batch_size = 200)
+model.fit(x_train, y_train, epochs = num_epochs, validation_split = 0.5, batch_size = 200)
 score = model.evaluate(x_test, y_test, batch_size = 200)
 print(score)
 
