@@ -29,7 +29,7 @@ embedding_matrix = np.load(str(vector_dimensionality) + "d_vocab_vector_matrix.n
 embedding_matrix = embedding_matrix[embedding_matrix.keys()[0]]
 
 
-x_unsplit = np.load(str(vector_dimensionality)+ "d_" + str(max_review_length) + "l_indexed_unsplit.npz") 
+x_unsplit = np.load(simp_string + "_way_" +str(vector_dimensionality)+ "d_" + str(max_review_length) + "l_indexed_unsplit.npz") 
 x_unsplit = x_unsplit[x_unsplit.keys()[0]]
 
 y_file = open("y_"+str(simplification_level) + "_way_balanced.txt", "r", encoding = "utf-8")
