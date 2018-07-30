@@ -15,8 +15,8 @@ import argparse
 
 parser = argparse.ArgumentParser(description='Specify the review length, vector dimensionality, and number of classes that you want.')
 parser.add_argument("-c", action = "store", nargs = '?', default = 2, type = int, dest = "simplification", help = "2: binary (default); 3: negative, neutral, positive; 5: 1-5 stars")
-parser.add_argument("-d", action = "store", nargs = '?', default = 2, type = int, dest = "dimensionality", help = "specify vector dimensionality ")
-parser.add_argument("-r", action = "store", nargs = '?', default = 2, type = int, dest = "review_length", help = "max_review_length (generate reviews of this length using get_word_mapping)")
+parser.add_argument("-d", action = "store", nargs = '?', default = 300, type = int, dest = "dimensionality", help = "specify vector dimensionality ")
+parser.add_argument("-r", action = "store", nargs = '?', default = 370, type = int, dest = "review_length", help = "max_review_length (generate reviews of this length using get_word_mapping)")
 args = parser.parse_args()
 
 
