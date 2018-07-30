@@ -35,42 +35,47 @@ x_multi_balanced = open("x_multi_way_balanced.txt", "w", encoding = "utf-8")
 y_quinary_balanced = open("y_5_way_balanced.txt", "w", encoding = "utf-8")
 y_ternary_balanced = open("y_3_way_balanced.txt", "w", encoding = "utf-8")
 
-counter = 0
-bins = [0,0,0,0,0]
-s_bins = [0,0]
 
-counter_balanced = 0
-bins_balanced = [0,0,0,0,0]
-s_bins_balanced = [0,0]
-
+y_binary_counter = [[0,0],[0,0]] #not,balanced
+y_ternary_counter = [[0,0,0],[0,0,0]] #not,balanced 
+y_quinary_counter = [[0,0,0,0,0],[0,0,0,0,0]] #not,balanced 
 def simplified_parse(formatted_review, simplified_rating, include):
     if not simplified_rating == 2:
         x_binary.write(formatted_review + "\n")
         y_binary.write(str(simplified_rating)+ "\n")
+        y_binary_counter[0][simplified_rating]+=1
         if simplified_rating == 0:
             x_binary_balanced.write(formatted_review + "\n")
             y_binary_balanced.write(str(simplified_rating)+ "\n")
+            y_binary_counter[1][simplified_rating]+=1
         elif include == 0 :
             x_binary_balanced.write(formatted_review + "\n")
             y_binary_balanced.write(str(simplified_rating)+ "\n")
+            y_binary_counter[1][simplified_rating]+=1
             
             
 def three_way_parse(formatted_review, simplified_rating, include):
     x_multi.write(formatted_review + "\n")
     y_ternary.write(str(simplified_rating)+ "\n")
+    y_ternary_counter[0][simplified_rating]+=1
     if not simplified_rating == 1:
         x_multi_balanced.write(formatted_review + "\n")
         y_ternary_balanced.write(str(simplified_rating)+ "\n")
+        y_ternary_counter[1][simplified_rating]+=1
     elif include == 0 :
         x_multi_balanced.write(formatted_review + "\n")
         y_ternary_balanced.write(str(simplified_rating)+ "\n")
+        y_ternary_counter[1][simplified_rating]+=1
 
 def unsimplified_parse(formatted_review, unsimplified_rating, include):
     y_quinary.write(str(unsimplified_rating)+ "\n")
+    y_quinary_counter[0][unsimplified_rating-1]+=1
     if not (unsimplified_rating == 4 or unsimplified_rating == 5):
         y_quinary_balanced.write(str(unsimplified_rating)+ "\n")
+        y_quinary_counter[1][unsimplified_rating-1]+=1
     elif include == 0 :
         y_quinary_balanced.write(str(unsimplified_rating)+ "\n")
+        y_quinary_counter[1][unsimplified_rating-1]+=1
 
 for l in parse("reviews_Toys_and_Games_5.json.gz"):
     unsimplified_rating = int(l["overall"])
@@ -82,12 +87,6 @@ for l in parse("reviews_Toys_and_Games_5.json.gz"):
     three_way_parse(formatted_review, simplified_rating, include)
     unsimplified_parse(formatted_review, unsimplified_rating, include)
     
-'''
-print("parsed %s entries total" %counter)
-print(bins)
-print(s_bins)
-
-print("parsed %s balanced entries" %counter_balanced)
-print(bins_balanced)
-print(s_bins_balanced)
-'''
+print(y_binary_counter)
+print(y_ternary_counter)
+print(y_quinary_counter)
