@@ -25,7 +25,7 @@ vector_dimensionality = args.dimensionality
 simplification_level = args.simplification
 simp_string = "2" if simplification_level == 2 else "multi"
 
-embedding_matrix = np.load(str(vector_dimensionality) + "d_vocab_vector_matrix.npz")
+embedding_matrix = np.load(simp_string + "_way_" +str(vector_dimensionality) + "d_vocab_vector_matrix.npz")
 embedding_matrix = embedding_matrix[embedding_matrix.keys()[0]]
 
 
