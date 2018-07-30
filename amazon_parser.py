@@ -6,7 +6,6 @@
 
 import gzip
 import random
-from langdetect import detect
 
 #turns 1 or 2 ratings into 0, 4 to 5 into 1 (negative or positive)
 def simplify_rating(rating):
@@ -22,19 +21,19 @@ def parse(path):
     for l in g:
         yield eval(l)
     g.close()
-'''    
-def format_review(text):
-    output = text.lower()
-    return ST.tokenize(output)
-'''
-        
-x_unsplit = open("x_unsplit.txt", "w", encoding = "utf-8")
-y_unsplit = open("y_unsplit.txt", "w", encoding = "utf-8")
-y_unsplit_unsimplified = open("y_unsplit_unsimplified.txt", "w", encoding = "utf-8")
 
-x_unsplit_balanced = open("x_unsplit_balanced.txt", "w", encoding = "utf-8")
-y_unsplit_balanced = open("y_unsplit_balanced.txt", "w", encoding = "utf-8")
-y_unsplit_unsimplified_balanced = open("y_unsplit_unsimplified_balanced.txt", "w", encoding = "utf-8")
+        
+x_binary = open("x_2_way.txt", "w", encoding = "utf-8")
+y_binary = open("y_2_way.txt", "w", encoding = "utf-8")
+x_multi = open("x_multi_way.txt", "w", encoding = "utf-8")
+y_quinary = open("y_5_way.txt", "w", encoding = "utf-8")
+y_ternary = open("y_3_way.txt", "w", encoding = "utf-8")
+
+x_binary_balanced = open("x_2_way_balanced.txt", "w", encoding = "utf-8")
+y_binary_balanced = open("y_2_way_balanced.txt", "w", encoding = "utf-8")
+x_multi_balanced = open("x_multi_way_balanced.txt", "w", encoding = "utf-8")
+y_quinary_balanced = open("y_5_way_balanced.txt", "w", encoding = "utf-8")
+y_ternary_balanced = open("y_3_way_balanced.txt", "w", encoding = "utf-8")
 
 counter = 0
 bins = [0,0,0,0,0]
@@ -44,28 +43,46 @@ counter_balanced = 0
 bins_balanced = [0,0,0,0,0]
 s_bins_balanced = [0,0]
 
+def simplified_parse(formatted_review, simplified_rating, include):
+    if not simplified_rating == 2:
+        x_binary.write(formatted_review + "\n")
+        y_binary.write(str(simplified_rating)+ "\n")
+        if simplified_rating == 0:
+            x_binary_balanced.write(formatted_review + "\n")
+            y_binary_balanced.write(str(simplified_rating)+ "\n")
+        elif include == 0 :
+            x_binary_balanced.write(formatted_review + "\n")
+            y_binary_balanced.write(str(simplified_rating)+ "\n")
+            
+            
+def three_way_parse(formatted_review, simplified_rating, include):
+    x_multi.write(formatted_review + "\n")
+    y_ternary.write(str(simplified_rating)+ "\n")
+    if not simplified_rating == 1:
+        x_multi_balanced.write(formatted_review + "\n")
+        y_ternary_balanced.write(str(simplified_rating)+ "\n")
+    elif include == 0 :
+        x_multi_balanced.write(formatted_review + "\n")
+        y_ternary_balanced.write(str(simplified_rating)+ "\n")
+
+def unsimplified_parse(formatted_review, unsimplified_rating, include):
+    y_quinary.write(str(unsimplified_rating)+ "\n")
+    if not (unsimplified_rating == 4 or unsimplified_rating == 5):
+        y_quinary_balanced.write(str(unsimplified_rating)+ "\n")
+    elif include == 0 :
+        y_quinary_balanced.write(str(unsimplified_rating)+ "\n")
+
 for l in parse("reviews_Toys_and_Games_5.json.gz"):
-
-    sr = simplify_rating(int(l["overall"]))
+    unsimplified_rating = int(l["overall"])
+    simplified_rating = simplify_rating(unsimplified_rating)
     formatted_review = l["reviewText"]
-    
-    if(sr != 2):
-        x_unsplit.write(formatted_review + "\n")
-        y_unsplit.write(str(sr)+ "\n")
-        y_unsplit_unsimplified.write(str(int(l["overall"]))+ "\n")
-        bins[int(l["overall"]) - 1] += 1
-        s_bins[sr] += 1
-        counter += 1
-
     include = random.randint(0,12)
-    if((sr==0 or (sr == 1 and include == 0))):
-        x_unsplit_balanced.write(formatted_review + "\n")
-        y_unsplit_balanced.write(str(sr)+ "\n")
-        y_unsplit_unsimplified_balanced.write(str(int(l["overall"]))+ "\n")
-        bins_balanced[int(l["overall"]) - 1] += 1
-        s_bins_balanced[sr] += 1
-        counter_balanced += 1
     
+    simplified_parse(formatted_review, simplified_rating, include)
+    three_way_parse(formatted_review, simplified_rating, include)
+    unsimplified_parse(formatted_review, unsimplified_rating, include)
+    
+'''
 print("parsed %s entries total" %counter)
 print(bins)
 print(s_bins)
@@ -73,15 +90,4 @@ print(s_bins)
 print("parsed %s balanced entries" %counter_balanced)
 print(bins_balanced)
 print(s_bins_balanced)
-'''
-oversample_ratio = 1
-
-while oversample_ratio > 0:
-    for l in parse("reviews_Grocery_and_Gourmet_Food_5.json.gz"):
-        if(not simplify_rating(int(l["overall"]))):
-            x_unsplit.write(l["reviewText"].lower() + "\n")
-            y_unsplit.write(str(simplify_rating(int(l["overall"])))+ "\n")
-            y_unsplit_unsimplified.write(str(int(l["overall"]))+ "\n")
-    oversample_ratio -=1
-            
 '''
