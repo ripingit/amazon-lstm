@@ -44,6 +44,8 @@ y_unsplit = y_unsplit if simplification_level == 2 else to_categorical(y_unsplit
 x_train, x_test, y_train, y_test = train_test_split(x_unsplit, y_unsplit, test_size=0.2)
 del x_unsplit
 
+#print("simplification level is: " + str(y_unsplit.shape))
+
 loss_type = "binary_crossentropy" if simplification_level == 2 else "categorical_crossentropy"
 number_of_units = 1 if simplification_level == 2 else simplification_level
 
