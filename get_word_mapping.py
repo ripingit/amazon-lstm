@@ -16,32 +16,28 @@ import argparse
 parser = argparse.ArgumentParser(description='Specify the dimensionality of the vectors and length of reviews')
 parser.add_argument("-d", action = "store", nargs = '?', default = 300, type = int, dest = "vector_dimensionality", help = "the dimensionality of the GloVe vectors used")
 parser.add_argument("-r", action = "store", nargs = '?', default = 370, type = int, dest = "review_length", help = "the review length")
+parser.add_argument("-s", action = "store", nargs = '?', default = 2, type = int, dest = "simplification", help = "2: binary (default); 3: negative, neutral, positive; 5: 1-5 stars")
 args = parser.parse_args()
 
 
 vector_dimensionality = args.vector_dimensionality
 review_length = args.review_length
+simplification_level = args.simplification
+simp_string = "2" if simplification_level == 2 else "multi"
 
-with open(str(vector_dimensionality) + "d_review_vocab_4.pickle", 'rb') as handle:
+with open(simp_string + "_way_" + str(vector_dimensionality) + "d_review_vocab_4.pickle", 'rb') as handle:
     glove_model = pickle.load(handle)
 
 #tt = TT(preserve_case = False)
 
 #load the reviews    
-x_file = open("x_unsplit_balanced.txt", "r", encoding = "utf-8")
-y_file = open("y_unsplit_balanced.txt", "r", encoding = "utf-8")
+x_file = open("x_" +simp_string + "_way_unsplit_balanced.txt", "r", encoding = "utf-8")
 
 
 #split the data into train and test
 x_unsplit = x_file.readlines()
-y_unsplit = np.array([int(line.strip()) for line in y_file])
 x_unsplit_tokenized = [text_to_word_sequence(review) for review in x_unsplit]
 
-
-x_train, x_test, y_train, y_test = train_test_split(x_unsplit_tokenized, y_unsplit, test_size=0.2)
-
-train_len = len(x_train)
-test_len =  len(x_test)
 
 #convert reviews into arrays of word vectors
 tokenizer = Tokenizer()
@@ -55,7 +51,7 @@ for word, index in tokenizer.word_index.items():
     if word in glove_model and index < glove_vocab_length :
         vocab_array[index] = glove_model[word]
 
-np.savez_compressed(str(vector_dimensionality) + "d_vocab_vector_matrix.npz", vocab_array)
+np.savez_compressed(simp_string + "_way_" +str(vector_dimensionality) + "d_vocab_vector_matrix.npz", vocab_array)
 del vocab_array
 
 #returns a 3D matrix representing the (sample, timestep, feature) of a GloVe-translated review 
@@ -88,18 +84,4 @@ def get_reviews(data):
 #get the training and testing datasets
 all_unsplit = tokenizer.texts_to_sequences(x_unsplit_tokenized)
 np_unsplit = get_reviews(all_unsplit)
-np.savez_compressed(str(vector_dimensionality) + "d_" + str(review_length) + "l_indexed_unsplit.npz", np_unsplit)
-'''
-
-#get the training and testing datasets
-all_test = tokenizer.texts_to_sequences(x_test)
-np_test = get_reviews(all_test)
-del all_test 
-np.save("indexed_test", np_test)
-del np_test
-
-all_train = tokenizer.texts_to_sequences(x_train)
-np_train = get_reviews(all_train)
-del all_train 
-np.save("indexed_train", np_train)
-'''
+np.savez_compressed(simp_string + "_way_" +str(vector_dimensionality) + "d_" + str(review_length) + "l_indexed_unsplit.npz", np_unsplit)
