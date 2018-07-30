@@ -38,7 +38,9 @@ x_unsplit = x_unsplit[x_unsplit.keys()[0]]
 y_file = open("y_"+str(simplification_level) + "_way_balanced.txt", "r", encoding = "utf-8")
 y_unsplit = np.array([int(line.strip()) for line in y_file])
 
+
 y_unsplit = y_unsplit if simplification_level == 2 else to_categorical(y_unsplit)
+
 
 x_train, x_test, y_train, y_test = train_test_split(x_unsplit, y_unsplit, test_size=0.2)
 del x_unsplit
