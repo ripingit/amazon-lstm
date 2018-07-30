@@ -7,6 +7,7 @@ import IPython
 import numpy as np
 from nltk.tokenize.casual import TweetTokenizer as TT
 import tensorflow as tf
+from keras.utils import to_categorical
 from keras.models import Sequential
 from keras.layers import Dropout, Dense, Activation, LSTM, Bidirectional, Masking, Embedding
 from sklearn.model_selection import train_test_split
