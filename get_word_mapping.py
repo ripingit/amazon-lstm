@@ -23,15 +23,14 @@ args = parser.parse_args()
 vector_dimensionality = args.vector_dimensionality
 review_length = args.review_length
 simplification_level = args.simplification
-simp_string = "2" if simplification_level == 2 else "multi"
 
-with open(simp_string + "_way_" + str(vector_dimensionality) + "d_review_vocab_4.pickle", 'rb') as handle:
+with open(str(simplification_level) + "_way_" + str(vector_dimensionality) + "d_review_vocab_4.pickle", 'rb') as handle:
     glove_model = pickle.load(handle)
 
 #tt = TT(preserve_case = False)
 
 #load the reviews    
-x_file = open("x_" +simp_string + "_way_balanced.txt", "r", encoding = "utf-8")
+x_file = open("x_" +str(simplification_level) + "_way_balanced.txt", "r", encoding = "utf-8")
 
 
 #split the data into train and test
@@ -51,7 +50,7 @@ for word, index in tokenizer.word_index.items():
     if word in glove_model and index < glove_vocab_length :
         vocab_array[index] = glove_model[word]
 
-np.savez_compressed(simp_string + "_way_" +str(vector_dimensionality) + "d_vocab_vector_matrix.npz", vocab_array)
+np.savez_compressed(str(simplification_level) + "_way_" +str(vector_dimensionality) + "d_vocab_vector_matrix.npz", vocab_array)
 del vocab_array
 
 #returns a 3D matrix representing the (sample, timestep, feature) of a GloVe-translated review 
@@ -84,4 +83,4 @@ def get_reviews(data):
 #get the training and testing datasets
 all_unsplit = tokenizer.texts_to_sequences(x_unsplit_tokenized)
 np_unsplit = get_reviews(all_unsplit)
-np.savez_compressed(simp_string + "_way_" +str(vector_dimensionality) + "d_" + str(review_length) + "l_indexed_unsplit.npz", np_unsplit)
+np.savez_compressed(str(simplification_level) + "_way_" +str(vector_dimensionality) + "d_" + str(review_length) + "l_indexed_unsplit.npz", np_unsplit)

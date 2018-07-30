@@ -25,14 +25,13 @@ args = parser.parse_args()
 max_review_length = args.review_length
 vector_dimensionality = args.dimensionality
 simplification_level = args.simplification
-simp_string = "2" if simplification_level == 2 else "multi"
 num_epochs = args.epochs
 
-embedding_matrix = np.load(simp_string + "_way_" +str(vector_dimensionality) + "d_vocab_vector_matrix.npz")
+embedding_matrix = np.load(str(simplification_level) + "_way_" +str(vector_dimensionality) + "d_vocab_vector_matrix.npz")
 embedding_matrix = embedding_matrix[embedding_matrix.keys()[0]]
 
 
-x_unsplit = np.load(simp_string + "_way_" +str(vector_dimensionality)+ "d_" + str(max_review_length) + "l_indexed_unsplit.npz") 
+x_unsplit = np.load(str(simplification_level) + "_way_" +str(vector_dimensionality)+ "d_" + str(max_review_length) + "l_indexed_unsplit.npz") 
 x_unsplit = x_unsplit[x_unsplit.keys()[0]]
 
 y_file = open("y_"+str(simplification_level) + "_way_balanced.txt", "r", encoding = "utf-8")
