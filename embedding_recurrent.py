@@ -27,11 +27,11 @@ vector_dimensionality = args.dimensionality
 simplification_level = args.simplification
 num_epochs = args.epochs
 
-embedding_matrix = np.load("neural_train"+str(simplification_level) + "_way_" +str(vector_dimensionality) + "d_vocab_vector_matrix.npz")
+embedding_matrix = np.load("neural_train/"+str(simplification_level) + "_way_" +str(vector_dimensionality) + "d_vocab_vector_matrix.npz")
 embedding_matrix = embedding_matrix[embedding_matrix.keys()[0]]
 
 
-x_unsplit = np.load("neural_train"+str(simplification_level) + "_way_" +str(vector_dimensionality)+ "d_" + str(max_review_length) + "l_indexed_unsplit.npz") 
+x_unsplit = np.load("neural_train/"+str(simplification_level) + "_way_" +str(vector_dimensionality)+ "d_" + str(max_review_length) + "l_indexed_unsplit.npz") 
 x_unsplit = x_unsplit[x_unsplit.keys()[0]]
 
 y_file = open("y_files/y_"+str(simplification_level) + "_way_balanced.txt", "r", encoding = "utf-8")
@@ -55,7 +55,7 @@ number_of_units = 1 if simplification_level == 2 else simplification_level
 model = Sequential()
 model.add(Embedding(len(embedding_matrix), vector_dimensionality, weights=[embedding_matrix], input_length= max_review_length, trainable=False))
 model.add(Masking(mask_value = 0.0, input_shape = (max_review_length, vector_dimensionality)))
-model.add(Bidirectional(LSTM(64, activation = "tanh", dropout = 0.5, recurrent_dropout = 0.5)))
+model.add(Bidirectional(LSTM(300, activation = "tanh", dropout = 0.5, recurrent_dropout = 0.5)))
 model.add(Dense(32, activation = "relu"))
 model.add(Dropout(0.3))
 model.add(Dense(number_of_units, activation = "sigmoid"))
