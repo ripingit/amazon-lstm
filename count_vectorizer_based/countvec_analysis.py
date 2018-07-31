@@ -23,11 +23,8 @@ args = parser.parse_args()
 simplification = args.simplification
 tf_idf = args.tfidf
 
-x_file_name = "../x_" + str(simplification) +"_way_balanced.txt"
-y_file_name_dict  = {2:"../y_2_way_balanced.txt",
-                     3:"../y_3_way_balanced.txt",
-                     5:"../y_5_way_balanced.txt"}
-y_file_name = y_file_name_dict[simplification]
+x_file_name = "../x_files/x_" + str(simplification) +"_way_balanced.txt"
+y_file_name = "../y_files/y_" + str(simplification) +"_way_balanced.txt"
 
 
 x_file = open(x_file_name, "r", encoding = "utf-8")

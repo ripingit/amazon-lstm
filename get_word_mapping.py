@@ -24,7 +24,7 @@ vector_dimensionality = args.vector_dimensionality
 review_length = args.review_length
 simplification_level = args.simplification
 
-with open("neural_train"+str(simplification_level) + "_way_" + str(vector_dimensionality) + "d_review_vocab_4.pickle", 'rb') as handle:
+with open("neural_train/"+str(simplification_level) + "_way_" + str(vector_dimensionality) + "d_review_vocab_4.pickle", 'rb') as handle:
     glove_model = pickle.load(handle)
 
 #tt = TT(preserve_case = False)
@@ -50,7 +50,7 @@ for word, index in tokenizer.word_index.items():
     if word in glove_model and index < glove_vocab_length :
         vocab_array[index] = glove_model[word]
 
-np.savez_compressed("neural_train"+str(simplification_level) + "_way_" +str(vector_dimensionality) + "d_vocab_vector_matrix.npz", vocab_array)
+np.savez_compressed("neural_train/"+str(simplification_level) + "_way_" +str(vector_dimensionality) + "d_vocab_vector_matrix.npz", vocab_array)
 del vocab_array
 
 #returns a 3D matrix representing the (sample, timestep, feature) of a GloVe-translated review 
@@ -83,4 +83,5 @@ def get_reviews(data):
 #get the training and testing datasets
 all_unsplit = tokenizer.texts_to_sequences(x_unsplit_tokenized)
 np_unsplit = get_reviews(all_unsplit)
-np.savez_compressed("neural_train"+str(simplification_level) + "_way_" +str(vector_dimensionality) + "d_" + str(review_length) + "l_indexed_unsplit.npz", np_unsplit)
+print("The number of reviews is " +str(len(np_unsplit)))
+np.savez_compressed("neural_train/"+str(simplification_level) + "_way_" +str(vector_dimensionality) + "d_" + str(review_length) + "l_indexed_unsplit.npz", np_unsplit)

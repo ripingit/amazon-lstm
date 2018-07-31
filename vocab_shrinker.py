@@ -60,6 +60,6 @@ for word, index in counter.most_common(vocab_size):
         
 print("The size of the review vocabulary is: %s" % len(review_vocab))
             
-with open("neural_train"+str(simplification_level) + "_way_" +str(vector_dimensionality) + 'd_review_vocab_4.pickle', 'wb') as handle:
+with open("neural_train/"+str(simplification_level) + "_way_" +str(vector_dimensionality) + 'd_review_vocab_4.pickle', 'wb') as handle:
     pickle.dump(review_vocab, handle, protocol=4)
     
