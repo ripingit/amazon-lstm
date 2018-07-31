@@ -27,14 +27,14 @@ vector_dimensionality = args.dimensionality
 simplification_level = args.simplification
 num_epochs = args.epochs
 
-embedding_matrix = np.load(str(simplification_level) + "_way_" +str(vector_dimensionality) + "d_vocab_vector_matrix.npz")
+embedding_matrix = np.load("neural_train"+str(simplification_level) + "_way_" +str(vector_dimensionality) + "d_vocab_vector_matrix.npz")
 embedding_matrix = embedding_matrix[embedding_matrix.keys()[0]]
 
 
-x_unsplit = np.load(str(simplification_level) + "_way_" +str(vector_dimensionality)+ "d_" + str(max_review_length) + "l_indexed_unsplit.npz") 
+x_unsplit = np.load("neural_train"+str(simplification_level) + "_way_" +str(vector_dimensionality)+ "d_" + str(max_review_length) + "l_indexed_unsplit.npz") 
 x_unsplit = x_unsplit[x_unsplit.keys()[0]]
 
-y_file = open("y_"+str(simplification_level) + "_way_balanced.txt", "r", encoding = "utf-8")
+y_file = open("y_files/y_"+str(simplification_level) + "_way_balanced.txt", "r", encoding = "utf-8")
 y_unsplit = np.array([int(line.strip()) for line in y_file])
 
 

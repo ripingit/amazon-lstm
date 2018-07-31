@@ -21,7 +21,7 @@ simplification_level = args.simplification
 #tokenizer = TT(preserve_case = False)
 
 #load the reviews    
-x_file = open("x_" +str(simplification_level)+"_way_balanced.txt", "r", encoding = "utf-8")
+x_file = open("x_files/x_" +str(simplification_level)+"_way_balanced.txt", "r", encoding = "utf-8")
 x_unsplit = x_file.readlines()
 x_unsplit_tokenized = [text_to_word_sequence(review) for review in x_unsplit]
 #x_unsplit_tokenized = [tokenizer.tokenize(review) for review in x_unsplit]
@@ -60,6 +60,6 @@ for word, index in counter.most_common(vocab_size):
         
 print("The size of the review vocabulary is: %s" % len(review_vocab))
             
-with open(str(simplification_level) + "_way_" +str(vector_dimensionality) + 'd_review_vocab_4.pickle', 'wb') as handle:
+with open("neural_train"+str(simplification_level) + "_way_" +str(vector_dimensionality) + 'd_review_vocab_4.pickle', 'wb') as handle:
     pickle.dump(review_vocab, handle, protocol=4)
     

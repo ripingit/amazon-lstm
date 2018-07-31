@@ -23,19 +23,19 @@ def parse(path):
     g.close()
 
         
-x_binary = open("x_2_way.txt", "w", encoding = "utf-8")
-y_binary = open("y_2_way.txt", "w", encoding = "utf-8")
-x_ternary = open("x_3_way.txt", "w", encoding = "utf-8")
-x_quinary = open("x_5_way.txt", "w", encoding = "utf-8")
-y_quinary = open("y_5_way.txt", "w", encoding = "utf-8")
-y_ternary = open("y_3_way.txt", "w", encoding = "utf-8")
+x_binary = open("x_files/x_2_way.txt", "w", encoding = "utf-8")
+y_binary = open("y_files/y_2_way.txt", "w", encoding = "utf-8")
+x_ternary = open("x_files/x_3_way.txt", "w", encoding = "utf-8")
+x_quinary = open("x_files/x_5_way.txt", "w", encoding = "utf-8")
+y_quinary = open("y_files/y_5_way.txt", "w", encoding = "utf-8")
+y_ternary = open("y_files/y_3_way.txt", "w", encoding = "utf-8")
 
-x_binary_balanced = open("x_2_way_balanced.txt", "w", encoding = "utf-8")
-y_binary_balanced = open("y_2_way_balanced.txt", "w", encoding = "utf-8")
-x_ternary_balanced = open("x_3_way_balanced.txt", "w", encoding = "utf-8")
-x_quinary_balanced = open("x_5_way_balanced.txt", "w", encoding = "utf-8")
-y_quinary_balanced = open("y_5_way_balanced.txt", "w", encoding = "utf-8")
-y_ternary_balanced = open("y_3_way_balanced.txt", "w", encoding = "utf-8")
+x_binary_balanced = open("x_files/x_2_way_balanced.txt", "w", encoding = "utf-8")
+y_binary_balanced = open("y_files/y_2_way_balanced.txt", "w", encoding = "utf-8")
+x_ternary_balanced = open("x_files/x_3_way_balanced.txt", "w", encoding = "utf-8")
+x_quinary_balanced = open("x_files/x_5_way_balanced.txt", "w", encoding = "utf-8")
+y_quinary_balanced = open("y_files/y_5_way_balanced.txt", "w", encoding = "utf-8")
+y_ternary_balanced = open("y_files/y_3_way_balanced.txt", "w", encoding = "utf-8")
 
 
 y_binary_counter = [[0,0],[0,0]] #not,balanced
@@ -73,7 +73,7 @@ def three_way_parse(formatted_review, simplified_rating):
 
 def unsimplified_parse(formatted_review, unsimplified_rating):
     x_quinary.write(formatted_review + "\n")
-    y_quinary.write(str(unsimplified_rating)+ "\n")
+    y_quinary.write(str(unsimplified_rating-1)+ "\n")
     y_quinary_counter[0][unsimplified_rating-1]+=1
     include_5 = random.randint(0,24)
     include_4 = random.randint(0,15)
@@ -81,11 +81,11 @@ def unsimplified_parse(formatted_review, unsimplified_rating):
     include_2 = random.randint(0,3)
     if unsimplified_rating == 1:
         x_quinary_balanced.write(formatted_review + "\n")
-        y_quinary_balanced.write(str(unsimplified_rating)+ "\n")
+        y_quinary_balanced.write(str(unsimplified_rating-1)+ "\n")
         y_quinary_counter[1][unsimplified_rating-1]+=1
     elif (unsimplified_rating  == 2 and include_2 < 3)or(unsimplified_rating  == 3 and include_3 < 5)or(unsimplified_rating  == 4 and include_4 < 2)or(unsimplified_rating  == 5 and include_5 == 0):
         x_quinary_balanced.write(formatted_review + "\n")
-        y_quinary_balanced.write(str(unsimplified_rating)+ "\n")
+        y_quinary_balanced.write(str(unsimplified_rating-1)+ "\n")
         y_quinary_counter[1][unsimplified_rating-1]+=1
 
 for l in parse("reviews_Toys_and_Games_5.json.gz"):
