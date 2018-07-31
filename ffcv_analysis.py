@@ -23,7 +23,6 @@ model = Sequential()
 
 model.add(Dense(64, input_dim = 32900, activation = 'relu'))
 model.add(Dropout(0.5))
-#model.add(BatchNormalization())
 model.add(Dense(64, activation = 'relu'))
 model.add(Dropout(0.5))
 model.add(Dense(1, activation = 'sigmoid'))

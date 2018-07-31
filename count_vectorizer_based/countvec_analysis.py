@@ -52,7 +52,7 @@ np.save("y_train_cv.npy", y_train)
 np.save("y_test_cv.npy", y_test)
 
 mnb1 = MNB()
-lgr1 = LR(multi_class = "ovr" if simplification == 2 else "multinomial", solver = "liblinear" if simplification == 2 else "newton-cg", max_iter = 200)
+lgr1 = LR(multi_class = "ovr" if simplification == 2 else "multinomial", solver = "liblinear" if simplification == 2 else "sag", max_iter = 200)
 rmf1 = RFC()
 #svm1 = SVC()
 
