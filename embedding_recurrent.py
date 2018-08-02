@@ -53,8 +53,8 @@ number_of_units = 1 if simplification_level == 2 else simplification_level
 #the input dimensionality is any number of samples, each containing a sequence of max_review_length 300-d vectors
 
 model = Sequential()
-model.add(Embedding(len(embedding_matrix), vector_dimensionality, weights=[embedding_matrix], input_length= max_review_length, trainable=False))
-model.add(Masking(mask_value = 0.0, input_shape = (max_review_length, vector_dimensionality)))
+model.add(Embedding(len(embedding_matrix), vector_dimensionality, weights=[embedding_matrix], mask_zero = True, input_length= max_review_length, trainable=True))
+model.add(Dropout(0.2))
 model.add(LSTM(64, activation = "tanh", dropout = 0.5, recurrent_dropout = 0.5))
 model.add(Dense(32, activation = "relu"))
 model.add(Dropout(0.2))

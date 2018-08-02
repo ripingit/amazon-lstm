@@ -53,9 +53,9 @@ number_of_units = 1 if simplification_level == 2 else simplification_level
 #the input dimensionality is any number of samples, each containing a sequence of max_review_length 300-d vectors
 
 model = Sequential()
-model.add(Embedding(len(embedding_matrix), vector_dimensionality, weights=[embedding_matrix], input_length= max_review_length, trainable=False))
+model.add(Embedding(len(embedding_matrix), vector_dimensionality, input_length= max_review_length, trainable=True))
 model.add(Flatten())
-model.add(Dense(50, activation = "sigmoid"))
+model.add(Dense(120, activation = "relu"))
 model.add(Dropout(0.5))
 model.add(Dense(50, activation = "relu"))
 model.add(Dropout(0.5))
