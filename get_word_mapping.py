@@ -9,6 +9,7 @@ import tensorflow as tf
 #from nltk.tokenize.casual import TweetTokenizer as TT
 from keras.preprocessing.text import text_to_word_sequence
 from keras.preprocessing.text import Tokenizer
+from keras.preprocessing.sequence import pad_sequences
 from sklearn.model_selection import train_test_split
 import gc
 import argparse 
@@ -43,7 +44,6 @@ tokenizer = Tokenizer()
 tokenizer.fit_on_texts(x_unsplit_tokenized)
 vocab_length = len(tokenizer.word_index)
 glove_vocab_length = len(glove_model)
-vector_dimensionality = len(glove_model["the"])
 
 vocab_array = np.zeros((glove_vocab_length, vector_dimensionality))
 for word, index in tokenizer.word_index.items():
@@ -60,6 +60,7 @@ del vocab_array
 wi = tokenizer.word_index
 
 def get_reviews(data):
+#padding, etc.
     num_reviews = len(data)
     all_reviews_matrix = np.empty((num_reviews, review_length))
     for review in range(num_reviews):
@@ -80,8 +81,16 @@ def get_reviews(data):
     return all_reviews_matrix
 
 
-#get the training and testing datasets
-all_unsplit = tokenizer.texts_to_sequences(x_unsplit_tokenized)
-np_unsplit = get_reviews(all_unsplit)
-print("The number of reviews is " +str(len(np_unsplit)))
+#get the texts as numbers
+all_unsplit = tokenizer.texts_to_sequences(x_unsplit)#_tokenized)
+np_unsplit = pad_sequences(all_unsplit, truncating = 'post', maxlen = 370)
+
+for review in np_unsplit:
+    for number in review:
+        if number >= glove_vocab_length:
+            number = 0
+            
+#np_unsplit = pad_sequences(all_unsplit, truncating = 'post')
+print("The number of reviews is " +str(len(all_unsplit)))
 np.savez_compressed("neural_train/"+str(simplification_level) + "_way_" +str(vector_dimensionality) + "d_" + str(review_length) + "l_indexed_unsplit.npz", np_unsplit)
+IPython.embed()
