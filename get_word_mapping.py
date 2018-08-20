@@ -18,20 +18,22 @@ parser = argparse.ArgumentParser(description='Specify the dimensionality of the 
 parser.add_argument("-d", action = "store", nargs = '?', default = 300, type = int, dest = "vector_dimensionality", help = "the dimensionality of the GloVe vectors used")
 parser.add_argument("-r", action = "store", nargs = '?', default = 370, type = int, dest = "review_length", help = "the review length")
 parser.add_argument("-s", action = "store", nargs = '?', default = 2, type = int, dest = "simplification", help = "2: binary (default); 3: negative, neutral, positive; 5: 1-5 stars")
+parser.add_argument("-c", action = "store", nargs = '?', default = "Toys", type = string, dest = "category", help = "what category to classify (should be same as folder name)")
 args = parser.parse_args()
 
 
 vector_dimensionality = args.vector_dimensionality
 review_length = args.review_length
 simplification_level = args.simplification
+category = args.category
 
-with open("neural_train/"+str(simplification_level) + "_way_" + str(vector_dimensionality) + "d_review_vocab_4.pickle", 'rb') as handle:
+with open(category+"/neural_train/"+str(simplification_level) + "_way_" + str(vector_dimensionality) + "d_review_vocab_4.pickle", 'rb') as handle:
     glove_model = pickle.load(handle)
 
 #tt = TT(preserve_case = False)
 
 #load the reviews    
-x_file = open("x_files/x_" +str(simplification_level) + "_way_balanced.txt", "r", encoding = "utf-8")
+x_file = open(category+"/x_files/x_" +str(simplification_level) + "_way_balanced.txt", "r", encoding = "utf-8")
 
 
 #split the data into train and test
@@ -50,7 +52,7 @@ for word, index in tokenizer.word_index.items():
     if word in glove_model and index < glove_vocab_length :
         vocab_array[index] = glove_model[word]
 
-np.savez_compressed("neural_train/"+str(simplification_level) + "_way_" +str(vector_dimensionality) + "d_vocab_vector_matrix.npz", vocab_array)
+np.savez_compressed(category+"/neural_train/"+str(simplification_level) + "_way_" +str(vector_dimensionality) + "d_vocab_vector_matrix.npz", vocab_array)
 del vocab_array
 
 #returns a 3D matrix representing the (sample, timestep, feature) of a GloVe-translated review 
@@ -64,7 +66,6 @@ def get_reviews(data):
     num_reviews = len(data)
     all_reviews_matrix = np.empty((num_reviews, review_length))
     for review in range(num_reviews):
-        #review_matrix = np.empty((review_length))
         this_text_review = data[review]
         this_text_review_length = len(this_text_review)
         for number, word_counter in zip(this_text_review, range(this_text_review_length)):
@@ -92,5 +93,5 @@ for review in np_unsplit:
             
 #np_unsplit = pad_sequences(all_unsplit, truncating = 'post')
 print("The number of reviews is " +str(len(all_unsplit)))
-np.savez_compressed("neural_train/"+str(simplification_level) + "_way_" +str(vector_dimensionality) + "d_" + str(review_length) + "l_indexed_unsplit.npz", np_unsplit)
+np.savez_compressed(category+"/neural_train/"+str(simplification_level) + "_way_" +str(vector_dimensionality) + "d_" + str(review_length) + "l_indexed_unsplit.npz", np_unsplit)
 IPython.embed()

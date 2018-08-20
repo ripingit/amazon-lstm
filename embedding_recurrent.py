@@ -19,6 +19,7 @@ parser.add_argument("-s", action = "store", nargs = '?', default = 2, type = int
 parser.add_argument("-d", action = "store", nargs = '?', default = 300, type = int, dest = "dimensionality", help = "specify vector dimensionality ")
 parser.add_argument("-r", action = "store", nargs = '?', default = 370, type = int, dest = "review_length", help = "max_review_length (generate reviews of this length using get_word_mapping)")
 parser.add_argument("-e", action = "store", nargs = '?', default = 30, type = int, dest = "epochs", help = "number of epochs")
+parser.add_argument("-c", action = "store", nargs = '?', default = "Toys", type = string, dest = "category", help = "what category to classify (should be same as folder name)")
 args = parser.parse_args()
 
 
