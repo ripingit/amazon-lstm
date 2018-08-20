@@ -18,7 +18,7 @@ parser = argparse.ArgumentParser(description='Specify the dimensionality of the 
 parser.add_argument("-d", action = "store", nargs = '?', default = 300, type = int, dest = "vector_dimensionality", help = "the dimensionality of the GloVe vectors used")
 parser.add_argument("-r", action = "store", nargs = '?', default = 370, type = int, dest = "review_length", help = "the review length")
 parser.add_argument("-s", action = "store", nargs = '?', default = 2, type = int, dest = "simplification", help = "2: binary (default); 3: negative, neutral, positive; 5: 1-5 stars")
-parser.add_argument("-c", action = "store", nargs = '?', default = "Toys", type = string, dest = "category", help = "what category to classify (should be same as folder name)")
+parser.add_argument("-c", action = "store", nargs = '?', default = "Toys", dest = "category", help = "what category to classify (should be same as folder name)")
 args = parser.parse_args()
 
 
