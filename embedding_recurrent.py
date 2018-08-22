@@ -58,7 +58,7 @@ model.add(Embedding(len(embedding_matrix), vector_dimensionality, weights=[embed
 model.add(Dropout(0.2))
 model.add(LSTM(64, activation = "tanh", dropout = 0.5, recurrent_dropout = 0.5))
 model.add(Dense(32, activation = "relu"))
-model.add(Dropout(0.2))
+model.add(Dropout(0.5))
 model.add(Dense(number_of_units, activation = "sigmoid"))
 model.compile(optimizer = "adam", loss = loss_type, metrics = ["accuracy"])
 model.fit(x_train, y_train, epochs = num_epochs, validation_split = 0.2, batch_size = 200)
